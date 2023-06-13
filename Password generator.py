@@ -1,6 +1,24 @@
 def main():
+   import secrets
+   import string
 
+   # define alphabet
+   letters = string.ascii_letters
+   digits = string.digits
+   special_chars = string.punctuation
 
+   alphabet = letters + digits + special_chars
+
+   # password length
+   pwd_length = 12
+
+   pwd = ''
+
+   # generates password string
+   for i in range(pwd_length):
+      pwd += ''.join(secrets.choice(alphabet))
+
+   print(pwd)
 main()
 
 
@@ -15,3 +33,4 @@ main()
    c. For each iteration of the loop, generate a random character (using the random module) and append it to the password string.
 5. Print the generated password to the console.
 6. End the program.
+'''
