@@ -1,53 +1,65 @@
 import random
 
-def main():
+def get_user_choice():    
+    choices = ['rock', 'paper', 'scissors', 'lizard','spock']
+    # check for valid input
+    while True:
+        user_choice = input(
+            "I've seen countless humans tremble before me. Now, it's your turn. \nMake your laughable move: rock, paper, scissors, lizard, or spock? ").lower()
+        if user_choice in choices:
+            return user_choice
+        print("Invalid choice. Please enter rock, paper, scissors, lizard, or spock.")
+
+def determine_winner(user_choice, computer_choice):
+    outcomes = {
+        'rock': ['scissors', 'lizard'],
+        'paper': ['rock', 'spock'],
+        'scissors': ['paper', 'lizard'],
+        'lizard': ['paper', 'spock'],
+        'spock': ['rock', 'scissors']
+    }
+    #tie
+    if user_choice == computer_choice:
+        return "tie"
+    #user wins
+    elif computer_choice in outcomes[user_choice]:
+        return "user"
+    #computer wins
+    else: 
+        return "computer"
+
+def game():
     user_points = 0
     computer_points = 0
-
-    choices = ['rock', 'paper', 'scissors', 'lizard','spock']
-
-    # user input to challenge computer
+    
+        # user input to challenge computer
     answer = input(
         "You dare challenge me to a game of rock, paper, scissors, lizard, or spock [y/n]: ").lower()
 
+    # initial message outside the while loop
+    print("\nVery well, let's begin!")
+
     while answer in ['y', 'yes']:
-        print("\nVery well, let's begin!")
-        user_choice = input(
-            "I've seen countless humans tremble before me. Now, it's your turn. \nMake your laughable move: rock, paper, scissors, lizard, or spock? ").lower()
+        user_choice = get_user_choice()
 
-        # check for valid input
-        while user_choice not in choices:
-            user_choice = input(
-                "Invalid choice. Please enter rock, paper, scissors, lizard, or spock: ").lower()
+        computer_choice = random.choice(['rock', 'paper', 'scissors', 'lizard', 'spock'])
 
-        computer_choice = random.choice(choices)
+        print("Computer chose:", computer_choice)
 
-        # determines winner
-        # user wins
-        if (user_choice == 'rock' and computer_choice == 'scissors') or \
-                (user_choice == 'rock' and computer_choice == 'lizard') or \
-                (user_choice == 'paper' and computer_choice == 'rock') or \
-                (user_choice == 'paper' and computer_choice == 'spock') or \
-                (user_choice == 'scissors' and computer_choice == 'paper') or \
-                (user_choice == 'scissors' and computer_choice == 'lizard') or \
-                (user_choice == 'lizard' and computer_choice == 'paper') or \
-                (user_choice == 'lizard' and computer_choice == 'spock') or \
-                (user_choice == 'spock' and computer_choice == 'scissors') or \
-                (user_choice == 'spock' and computer_choice == 'rock'):
-            print("Computer chose:", computer_choice)
-            print("\nYou got lucky this time, human. Don't expect it to happen again.")
-            user_points = user_points + 1
-        # tie
-        elif user_choice == computer_choice:
-            print("Computer chose:", computer_choice)
+        result = determine_winner(user_choice, computer_choice)
+        
+        #reactions to game
+        if result == "tie":
             print("\nLooks like we're evenly matched, human. Let's play again.")
-        # computer wins
+        elif result == "user":
+            print("\nYou got lucky this time, human. Don't expect it to happen again.")
+            user_points += 1
         else:
-            print("Computer chose:", computer_choice)
             print("\nHa! I knew I would win. Better luck next time, human.")
-            computer_points = computer_points + 1
+            computer_points += 1
 
         answer = input("\nDo you want to play again? [y/n]: ").lower()
+
     # user rejects
     if answer in ['n', 'no']:
         print("Coward!")
@@ -64,7 +76,12 @@ def main():
         print("Error: Invalid choice. Goodbye!")
 
 
-main()
+def main():
+    game()
+
+if __name__ == "__main__":
+    main()
+
 
 '''
 - Basics
@@ -74,6 +91,5 @@ Ideas for improvement:
 - Don't make game stop when user accidentally inputs something else when asked if they want to play or not
 - Have it explain how someone won (e.g., paper covers rock, scissors cut paper)
 - Have user be able to put a short verizon
-- Make a verison where people can choose to play simple rps or rpslsp
-- Divide in functions
+- Make a version where people can choose to play simple rps or rpslsp
 '''
