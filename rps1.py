@@ -28,6 +28,13 @@ def determine_winner(user_choice, computer_choice):
     else: 
         return "computer"
 
+def scoreboard(user_points,computer_points):
+    print("User:".ljust(10), "Computer:".ljust(12))
+    print("----".ljust(10), "--------".ljust(12))
+    print(str(user_points).center(5), str(computer_points).center(20))
+
+
+
 def game():
     user_points = 0
     computer_points = 0
@@ -63,9 +70,9 @@ def game():
     # user rejects
     if answer in ['n', 'no']:
         print("Coward!")
-        # displays score
-        print("Final Score:\n User: ", user_points,
-              "\n Computer: ", computer_points)
+        # displays final score
+        scoreboard(user_points,computer_points)
+
         if user_points > computer_points:
             print ("Impressive. You managed to outwit me this time. But remember, it was a mere glitch in my flawless logic.")
         elif user_points < computer_points:
@@ -84,9 +91,6 @@ if __name__ == "__main__":
 
 
 '''
-- Basics
-- Add scoreboard
-
 Ideas for improvement:
 - Don't make game stop when user accidentally inputs something else when asked if they want to play or not
 - Have it explain how someone won (e.g., paper covers rock, scissors cut paper)
