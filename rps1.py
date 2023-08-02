@@ -9,24 +9,26 @@ def main_menu():
           """)
     game_mode = input("Make your choice: ")
     if game_mode == "1":
-        game_mode = ['rock', 'paper', 'scissors']
-        game(game_mode)
+        choices = ['rock', 'paper', 'scissors']
     elif game_mode == "2":
         choices = ['rock', 'paper', 'scissors', 'lizard', 'spock']
-        game(game_mode)
+    elif game_mode == "3":
+        print("Coward!")
+        return None
     else:
         print("Invalid choice. Please enter a valid option.")
-        main_menu()
+        return main_menu()
 
-def get_user_choice():    
-    choices = ['rock', 'paper', 'scissors', 'lizard','spock']
+    return choices
+
+def get_user_choice(choices):    
     # check for valid input
     while True:
         user_choice = input(
-            "I've seen countless humans tremble before me. Now, it's your turn. \nMake your laughable move: rock, paper, scissors, lizard, or spock? ").lower()
+            "I've seen countless humans tremble before me. Now, it's your turn. \nMake your laughable move: "+ ', '.join(choices[:-1]) +" or "+ choices[-1] +"? ").lower()
         if user_choice in choices:
             return user_choice
-        print("Invalid choice. Please enter rock, paper, scissors, lizard, or spock.")
+        print("Invalid choice. Please enter "+ ', '.join(choices[:-1]) +" or "+ choices[-1] +".")
 
 def determine_winner(user_choice, computer_choice):
     outcomes = {
@@ -57,17 +59,20 @@ def game():
     user_points = 0
     computer_points = 0
     
-        # user input to challenge computer
+    choices = main_menu()
+    if not choices:
+        return # user chose to exit
+     # user input to challenge computer
     answer = input(
-        "You dare challenge me to a game of rock, paper, scissors, lizard, or spock [y/n]: ").lower()
+        "You dare challenge me to a game of "+ ', '.join(choices) +"? [y/n]: ").lower()
 
     # initial message outside the while loop
     print("\nVery well, let's begin!")
 
     while answer in ['y', 'yes']:
-        user_choice = get_user_choice()
+        user_choice = get_user_choice(choices)
 
-        computer_choice = random.choice(['rock', 'paper', 'scissors', 'lizard', 'spock'])
+        computer_choice = random.choice(choices)
 
         print("Computer chose:", computer_choice)
 
@@ -113,15 +118,15 @@ Ideas for improvement:
 - Don't make game stop when user accidentally inputs something else when asked if they want to play or not
 - Have it explain how someone won (e.g., paper covers rock, scissors cut paper)
 - Have user be able to put a short verizon
-- Make a version where people can choose to play simple rps or rpslsp
+- do something with tkinter??
 '''
 
 '''
 Pseudocode:
-1. Create main menu
-2. Have the main menu list their choices
+1. create main menu
+2. have the main menu list their choices
 3. have game function call the menu to receive the game mode and the choices and call determine winner
 4. determine winner must update their dictionary to change based on game mode
-5. Run test and make adjustments. especially in the game function
-5. find peace <3 <3 <3
+5. run test and make adjustments. especially in the game function
+6. find peace <3 <3 <3
 '''
