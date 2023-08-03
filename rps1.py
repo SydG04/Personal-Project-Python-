@@ -21,14 +21,26 @@ def main_menu():
 
     return choices
 
-def get_user_choice(choices):    
+def get_user_choice(choices): 
+    #Short version
+    short_to_full = {
+        'r': 'rock',
+        'p': 'paper',
+        's': 'scissors',
+        'l': 'lizard',
+        'sp': 'spock'
+    }
     # check for valid input
     while True:
         user_choice = input(
-            "I've seen countless humans tremble before me. Now, it's your turn. \nMake your laughable move: "+ ', '.join(choices[:-1]) +" or "+ choices[-1] +"? ").lower()
+            "\nI've seen countless humans tremble before me. Now, it's your turn. \nMake your laughable move: "+ ', '.join(choices[:-1]) +" or "+ choices[-1] +"? ").lower()
+            
+        #if the input is a short form, convert it to the full form
+        user_choice = short_to_full.get(user_choice, user_choice)
+
         if user_choice in choices:
             return user_choice
-        print("Invalid choice. Please enter "+ ', '.join(choices[:-1]) +" or "+ choices[-1] +".")
+        print("\nInvalid choice. Please enter "+ ', '.join(choices[:-1]) +" or "+ choices[-1] +".")
 
 def determine_winner(user_choice, computer_choice):
     outcomes = {
@@ -62,7 +74,8 @@ def game():
     choices = main_menu()
     if not choices:
         return # user chose to exit
-     # user input to challenge computer
+    
+    # user input to challenge computer
     answer = input(
         "You dare challenge me to a game of "+ ', '.join(choices) +"? [y/n]: ").lower()
 
@@ -90,6 +103,11 @@ def game():
 
         answer = input("\nDo you want to play again? [y/n]: ").lower()
 
+     #Check for valid input to continue the game
+        while answer not in ['y', 'yes', 'n', 'no']:
+            print("Invalid choice. Please enter 'y' or 'n'.")
+            answer = input("\nDo you want to play again? [y/n]: ").lower()
+
     # user rejects
     if answer in ['n', 'no']:
         print("Coward!")
@@ -102,8 +120,6 @@ def game():
             print ("You see, human, victory is my domain. It's a shame you can't keep up.")
         else:
             print ("A tie? How... underwhelming. I suppose even a broken clock is right twice a day.")
-    else:
-        print("Error: Invalid choice. Goodbye!")
 
 
 def main():
@@ -119,6 +135,7 @@ Ideas for improvement:
 - Have it explain how someone won (e.g., paper covers rock, scissors cut paper)
 - Have user be able to put a short verizon
 - do something with tkinter??
+- add colored text
 '''
 
 '''
