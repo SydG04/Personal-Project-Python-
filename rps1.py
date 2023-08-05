@@ -75,52 +75,58 @@ def game():
     if not choices:
         return # user chose to exit
     
-    # user input to challenge computer
-    answer = input(
-        "You dare challenge me to a game of "+ ', '.join(choices) +"? [y/n]: ").lower()
+    while True:
+        # user input to challenge computer
+        answer = input(
+            "You dare challenge me to a game of " + ', '.join(choices) + "? [y/n]: ").lower()
 
-    # initial message outside the while loop
-    print("\nVery well, let's begin!")
-
-    while answer in ['y', 'yes']:
-        user_choice = get_user_choice(choices)
-
-        computer_choice = random.choice(choices)
-
-        print("Computer chose:", computer_choice)
-
-        result = determine_winner(user_choice, computer_choice)
+        while answer not in ['y', 'yes','n','no']:
+            print("\nInvalid choice. Please enter 'y' or 'n'.\n")
+            answer = input(
+            "You dare challenge me to a game of " + ', '.join(choices) + "? [y/n]: ").lower()
         
-        #reactions to game
-        if result == "tie":
-            print("\nLooks like we're evenly matched, human. Let's play again.")
-        elif result == "user":
-            print("\nYou got lucky this time, human. Don't expect it to happen again.")
-            user_points += 1
-        else:
-            print("\nHa! I knew I would win. Better luck next time, human.")
-            computer_points += 1
+        print("\nVery well, let's begin!")
 
-        answer = input("\nDo you want to play again? [y/n]: ").lower()
+        while answer in ['y', 'yes']:
+            user_choice = get_user_choice(choices)
 
-     #Check for valid input to continue the game
-        while answer not in ['y', 'yes', 'n', 'no']:
-            print("Invalid choice. Please enter 'y' or 'n'.")
+            computer_choice = random.choice(choices)
+
+            print("Computer chose:", computer_choice)
+
+            result = determine_winner(user_choice, computer_choice)
+
+            # reactions to game
+            if result == "tie":
+                print("\nLooks like we're evenly matched, human. Let's play again.")
+            elif result == "user":
+                print("\nYou got lucky this time, human. Don't expect it to happen again.")
+                user_points += 1
+            else:
+                print("\nHa! I knew I would win. Better luck next time, human.")
+                computer_points += 1
+
             answer = input("\nDo you want to play again? [y/n]: ").lower()
 
-    # user rejects
-    if answer in ['n', 'no']:
-        print("Coward!")
-        # displays final score
-        scoreboard(user_points,computer_points)
+            # Check for valid input to continue the game
+            while answer not in ['y', 'yes', 'n', 'no']:
+                print("\nInvalid choice. Please enter 'y' or 'n'.")
+                answer = input("\nDo you want to play again? [y/n]: ").lower()
+        
+        if answer in ['n','no']:
+            print("Coward!")
+            # displays final score
+            scoreboard(user_points, computer_points)
 
-        if user_points > computer_points:
-            print ("Impressive. You managed to outwit me this time. But remember, it was a mere glitch in my flawless logic.")
-        elif user_points < computer_points:
-            print ("You see, human, victory is my domain. It's a shame you can't keep up.")
-        else:
-            print ("A tie? How... underwhelming. I suppose even a broken clock is right twice a day.")
-
+            if user_points > computer_points:
+                print("Impressive. You managed to outwit me this time. But remember, it was a mere glitch in my flawless logic.")
+                break
+            elif user_points < computer_points:
+                print("You see, human, victory is my domain. It's a shame you can't keep up.")
+                break
+            else:
+                print("A tie? How... underwhelming. I suppose even a broken clock is right twice a day.")
+                break
 
 def main():
     game()
